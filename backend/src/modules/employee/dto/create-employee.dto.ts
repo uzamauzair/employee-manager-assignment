@@ -1,5 +1,6 @@
 import { IsString, IsEmail, IsEnum, IsOptional, Length, IsBoolean } from 'class-validator';
 import { GenderType } from '../types';
+import { IsPhoneNumber } from '../../../common/decorators';
 
 export class CreateEmployeeDto {
     @IsString()
@@ -13,7 +14,7 @@ export class CreateEmployeeDto {
     @IsEmail()
     email: string;
 
-    @IsString()
+    @IsPhoneNumber({ message: 'Phone number is not valid' })
     phoneNumber: string;
 
     @IsEnum(GenderType)

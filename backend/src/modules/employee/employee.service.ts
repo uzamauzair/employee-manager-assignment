@@ -46,11 +46,10 @@ export class EmployeeService {
       this.logger.log('createEmployee()');
       const res = await this.employeeModel.deleteOne({ email: createEmployeeDto.email, isDeleted: true }).lean().exec();
 
-      const employee = await this.employeeModel.findOne({ email: createEmployeeDto.email }).lean().exec();
-      console.log("empl", employee);
+      const employee = await this.employeeModel.findOne({ email: createEmployeeDto.email, isDeleted: false }).lean().exec();
 
       if (employee) {
-        return employee;
+        throw new ConflictException('Employee Already Exist in this email');
       }
       const newUser = new this.employeeModel(createEmployeeDto);
       return await newUser.save();
