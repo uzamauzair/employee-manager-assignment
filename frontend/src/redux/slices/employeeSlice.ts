@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchEmployees, addEmployee, updateEmployee, deleteEmployee } from '../actions';
 
 export interface Employee {
-    id: string;  // Updated to string to reflect MongoDB's ObjectId
+    _id?: string;  // Updated to string to reflect MongoDB's ObjectId
     firstName: string;
     lastName: string;
     email: string;
@@ -54,13 +54,13 @@ const employeeSlice = createSlice({
                 state.employees.push(action.payload);
             })
             .addCase(updateEmployee.fulfilled, (state, action: PayloadAction<Employee>) => {
-                const index = state.employees.findIndex(emp => emp.id === action.payload.id);
+                const index = state.employees.findIndex(emp => emp._id === action.payload._id);
                 if (index !== -1) {
                     state.employees[index] = action.payload;
                 }
             })
             .addCase(deleteEmployee.fulfilled, (state, action: PayloadAction<string>) => {
-                state.employees = state.employees.filter(emp => emp.id !== action.payload);
+                state.employees = state.employees.filter(emp => emp._id !== action.payload);
             });
     },
 });

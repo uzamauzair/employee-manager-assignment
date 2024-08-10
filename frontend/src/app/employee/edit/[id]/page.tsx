@@ -1,4 +1,19 @@
 "use client";
+
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  RootState,
+  AppDispatch,
+  fetchEmployees,
+  updateEmployee,
+} from "@/redux";
+import {
+  EmployeeFormData,
+  EmployeeSchema,
+} from "@/validators/employeeValidators";
 import { Button } from "@/components/atoms/button";
 import {
   Card,
@@ -16,26 +31,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { setErrorToast, setSuccessToast } from "@/functions/toast.function";
-import { addEmployee, AppDispatch, RootState } from "@/redux";
-import {
-  EmployeeFormData,
-  EmployeeSchema,
-} from "@/validators/employeeValidators";
-import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
-const AddEmployee = () => {
+const EditEmployee = ({ params }: { params: { id: string } }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const employee = useSelector((state: RootState) =>
+    state.employee.employees.find((emp) => emp._id === params.id)
+  );
+
+  const router = useRouter();
+
   const form = useForm<EmployeeFormData>({
     resolver: yupResolver(EmployeeSchema),
     defaultValues: {
@@ -43,33 +51,46 @@ const AddEmployee = () => {
       lastName: "",
       email: "",
       phoneNumber: "",
-      gender: "M", // or set to a default like 'M' or 'F' if preferred
+      gender: "M",
     },
   });
 
-  const dispatch = useDispatch<AppDispatch>();
-  const loading = useSelector((state: RootState) => state.employee.loading);
-  const error = useSelector((state: RootState) => state.employee.error);
+  useEffect(() => {
+    if (employee) {
+      form.reset(employee);
+    } else {
+      dispatch(fetchEmployees()); // Fetch employees if not already fetched
+    }
+  }, [employee, dispatch, form]);
 
-  const onSubmit = async (data: EmployeeFormData) => {
+  const onSubmit = async (data: any) => {
     try {
-      const response = await dispatch(addEmployee(data)).unwrap();
+      const { _id, createdAt, updatedAt, __v, ...filteredData } = data;
+
+      const response = await dispatch(
+        updateEmployee({ empId: params.id, updatedEmployee: filteredData })
+      ).unwrap();
       if (response) {
-        form.reset();
-        setSuccessToast("Employee Successfully Created");
+        setSuccessToast("Employee Successfully Updated");
+        router.push("/employee/list");
       }
     } catch (err) {
-      console.error("Failed to add employee:", err);
-      setErrorToast("Failed to create Employee, try again");
+      console.error("Failed to update employee:", err);
+      setErrorToast("Failed to update Employee, try again");
     }
   };
+
+  if (!employee) {
+    return <div>Loading...</div>; // or handle loading state appropriately
+  }
+
   return (
     <>
-      <div className="flex justify-center items-center my-10 ">
+      <div className="flex justify-center items-center my-10">
         <Card className="border border-yellow-950 px-5 pb-5">
           <CardHeader>
-            <CardTitle>Create Employee</CardTitle>
-            <CardDescription>Create a new Employee</CardDescription>
+            <CardTitle>Edit Employee</CardTitle>
+            <CardDescription>Update the employee details</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <Form {...form}>
@@ -152,40 +173,30 @@ const AddEmployee = () => {
                   control={form.control}
                   name="gender"
                   render={({ field }) => (
-                    <FormItem className="space-x-2">
-                      <FormLabel>Select Your Gender</FormLabel>
+                    <FormItem>
+                      <FormLabel>Gender</FormLabel>
                       <FormControl>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="default">
-                              {field.value === "M"
-                                ? "Male"
-                                : field.value === "F"
-                                ? "Female"
-                                : "Select Gender"}
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent>
-                            <DropdownMenuItem
-                              onSelect={() => field.onChange("M")}
-                            >
-                              Male
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              onSelect={() => field.onChange("F")}
-                            >
-                              Female
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
+                        <RadioGroup
+                          value={field.value}
+                          onValueChange={field.onChange} // use onValueChange instead of onChange for correct event handling
+                        >
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="M" id="option-male" />
+                            <Label htmlFor="option-male">Male</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="F" id="option-female" />
+                            <Label htmlFor="option-female">Female</Label>
+                          </div>
+                        </RadioGroup>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
 
-                <Button id="button" variant="outline" type="submit">
-                  Submit
+                <Button id="button" type="submit">
+                  Update
                 </Button>
               </form>
             </Form>
@@ -196,4 +207,4 @@ const AddEmployee = () => {
   );
 };
 
-export default AddEmployee;
+export default EditEmployee;

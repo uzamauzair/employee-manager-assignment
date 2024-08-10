@@ -9,6 +9,7 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Button } from "@/components/atoms/button";
+import Pagination from "../pagination/paginiation";
 
 interface AnyObject {
   [key: string]: any;
@@ -63,20 +64,15 @@ export const MainTable = <T extends AnyObject>({
           {countTitle}：{count}
           {action && (
             <div className="h-full flex items-end justify-end lg:pr-2">
-              {/* <button
-                className="mt-5 bg-secondary text-white py-2 px-4 rounded"
-                onClick={}
-              > */}
               <Button variant="default" size="lg" onClick={action}>
                 {label}
               </Button>
-              {/* </button> */}
             </div>
           )}
         </div>
       </div>
       <div className="h-[70vh] relative overflow-auto">
-        <ShadcnTable className=" w-full caption-bottom text-sm border border-gray-300 mb-10">
+        <ShadcnTable className="w-full caption-bottom text-sm border border-gray-300 mb-10">
           <TableHeader className="sticky top-0 bg-white z-10 !text-black">
             <TableRow>
               {columns.map((col) => (
@@ -103,29 +99,12 @@ export const MainTable = <T extends AnyObject>({
             <TableFooter>
               <TableRow>
                 <TableCell colSpan={columns.length}>
-                  <div className="flex justify-end items-center">
-                    <button
-                      onClick={() =>
-                        setCurrentPage((prev) => Math.max(prev - 1, 1))
-                      }
-                      disabled={currentPage === 1}
-                      className="px-2 py-1 mx-1 border rounded disabled:opacity-50"
-                    >
-                      Previous
-                    </button>
-                    <span className="px-2">
-                      Page {currentPage} of {totalPages}
-                    </span>
-                    <button
-                      onClick={() =>
-                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                      }
-                      disabled={currentPage === totalPages}
-                      className="px-2 py-1 mx-1 border rounded disabled:opacity-50"
-                    >
-                      Next
-                    </button>
-                  </div>
+                  {/* Reusable Pagination Component */}
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                  />
                 </TableCell>
               </TableRow>
             </TableFooter>

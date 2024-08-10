@@ -1,5 +1,16 @@
 import { Button } from "@/components/atoms/button";
-import { Employee } from "@/redux/slices/employeeSlice";
+import { Employee } from "@/redux";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export const getEmployeeTableColumns = (
   handleEditEmployee: (empId: string) => void,
@@ -29,20 +40,36 @@ export const getEmployeeTableColumns = (
     {
       title: "Actions",
       dataIndex: "actions" as keyof Employee,
-      render: (_: any, record: any) => (
+      render: (_: any, record: Employee) => (
         <div className="flex gap-2">
           <Button
             variant="outline"
-            onClick={() => handleEditEmployee(record.id)}
+            onClick={() => handleEditEmployee(record._id!)}
           >
             Edit
           </Button>
-          <Button
-            variant="destructive"
-            onClick={() => handleDeleteEmployee(record.id)}
-          >
-            Delete
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="destructive">Delete</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete the
+                  employee.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() => handleDeleteEmployee(record._id!)}
+                >
+                  Delete
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       ),
     },

@@ -7,14 +7,11 @@ import {
   fetchEmployees,
   deleteEmployee,
 } from "@/redux/actions/employeeActions";
-import {
-  selectEmployees,
-  selectLoading,
-  selectError,
-} from "@/redux/selectors/employeeSelectors";
+import { selectEmployees, selectLoading, selectError } from "@/redux/selectors";
 import { AppDispatch } from "@/redux/store";
 import { useRouter } from "next/navigation";
 import { getEmployeeTableColumns } from "./employeeTableColumns";
+import Loader from "@/components/atoms/loader/loader";
 
 export const EmployeesTable = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -50,19 +47,25 @@ export const EmployeesTable = () => {
     loadEmployees();
   }, [dispatch]);
 
+  console.log("Employees", employees);
+
   const columns = getEmployeeTableColumns(
     handleEditEmployee,
     handleDeleteEmployee
   );
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   if (error) return <div>Error: {error}</div>;
 
   return (
     <MainTable
       columns={columns}
       data={employees}
-      tableTitle="Employees"
       countTitle="Total Employees"
       count={employees.length}
       action={handleAddEmployee}

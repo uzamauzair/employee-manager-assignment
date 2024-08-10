@@ -17,7 +17,7 @@ export const addEmployee = createAsyncThunk<Employee, Employee>('employee/addEmp
 export const updateEmployee = createAsyncThunk<Employee, { empId: string; updatedEmployee: Employee }>(
     'employee/updateEmployee',
     async ({ empId, updatedEmployee }) => {
-        const response = await api.put<Employee>(`${EMPLOYEE_ENDPOINT}/${empId}`, updatedEmployee);
+        const response = await api.patch<Employee>(`${EMPLOYEE_ENDPOINT}/${empId}`, updatedEmployee);
         return response.data;
     }
 );
