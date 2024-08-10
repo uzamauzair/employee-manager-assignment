@@ -17,7 +17,7 @@ import {
 import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto, UpdateEmployeeDto } from './dto';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
-import { ApiGetAllResponse, ERRORS, GetAllQueryParams, GetAllResponseDto, MONGODB_ERRORS } from 'src/common';
+import { ApiGetAllResponse, ERRORS, GetAllQueryParams, GetAllResponseDto, MONGODB_ERRORS } from '../../common';
 import { Employee } from './entities';
 import { EMPLOYEE_CONSTANTS } from './constants';
 
@@ -47,6 +47,7 @@ export class EmployeeController {
   async createEmployee(@Body() createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     this.logger.log('Creating a new employee');
     try {
+      console.log("createEmployeeDto", createEmployeeDto);
       return await this.employeeService.createEmployee(createEmployeeDto);
     } catch (error) {
       if (error.code === MONGODB_ERRORS.DUPLICATE_KEY_ERROR) {

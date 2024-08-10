@@ -1,4 +1,3 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsEmail, IsEnum, IsOptional, Length, IsBoolean } from 'class-validator';
 import { GenderType } from '../types';
 
@@ -13,10 +12,6 @@ export class CreateEmployeeDto {
 
     @IsEmail()
     email: string;
-
-    @IsOptional()
-    @IsString()
-    contact?: string;
 
     @IsString()
     phoneNumber: string;

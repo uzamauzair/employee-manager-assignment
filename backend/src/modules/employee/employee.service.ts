@@ -4,7 +4,7 @@ import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Employee } from './entities';
 import { Model } from 'mongoose';
-import { GetAllQueryParams, GetAllResponseDto, MONGODB_ERRORS } from 'src/common';
+import { GetAllQueryParams, GetAllResponseDto, MONGODB_ERRORS } from '../../common';
 
 @Injectable()
 export class EmployeeService {

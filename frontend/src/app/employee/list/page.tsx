@@ -1,16 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { EmployeesTable } from "../_components";
 import { EmployeeGrid } from "../_components/employeeGridView";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { RootState, AppDispatch } from "@/redux/store";
+import { toggleView } from "@/redux/slices/viewGridSlice";
 
 const ListEmployees = () => {
-  const [isGridView, setIsGridView] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const isGridView = useSelector((state: RootState) => state.view.isGridView);
 
-  // Function to toggle the view
   const handleViewToggle = () => {
-    setIsGridView((prevState) => !prevState);
+    dispatch(toggleView());
   };
 
   return (

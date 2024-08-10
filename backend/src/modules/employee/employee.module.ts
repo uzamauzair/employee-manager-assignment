@@ -3,7 +3,7 @@ import { EmployeeService } from './employee.service';
 import { EmployeeController } from './employee.controller';
 import { Employee, EmployeeSchema } from './entities';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AppConfigModule } from 'src/config/app';
+import { AppConfigModule } from '../../config/app';
 
 @Module({
   controllers: [EmployeeController],

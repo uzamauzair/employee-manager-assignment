@@ -1,10 +1,13 @@
 // src/redux/store/index.ts
 import { configureStore } from '@reduxjs/toolkit';
 import employeeReducer from '../slices/employeeSlice';
+import viewGridSlice from '../slices/viewGridSlice';
+
 
 export const store = configureStore({
     reducer: {
         employee: employeeReducer,
+        view: viewGridSlice,
     },
 });
 
