@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "@/components/ui/card";
+} from "@/components/molucules/card/card";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { Button } from "@/components/atoms/button";
 import {
@@ -19,7 +19,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from "@/components/molucules/alert-dialog/alert-dialog";
 
 type EmployeeCardProps = {
   firstName: string;

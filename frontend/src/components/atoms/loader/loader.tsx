@@ -1,6 +1,7 @@
+import React from "react";
 import { LoaderIcon } from "lucide-react";
 
-function Loader(props: { background?: boolean }) {
+export function Loader(props: { background?: boolean }) {
   if (props.background) {
     return (
       <div className="bg-slate-500 flex h-screen flex-col items-center justify-center">
@@ -11,5 +12,3 @@ function Loader(props: { background?: boolean }) {
 
   return <LoaderIcon className="animate-spin" />;
 }
-
-export default Loader;

@@ -1,116 +1,117 @@
 import * as React from "react";
-import {
-  Table as ShadcnTable,
+
+import { cn } from "@/lib/utils";
+
+const Table = React.forwardRef<
+  HTMLTableElement,
+  React.HTMLAttributes<HTMLTableElement>
+>(({ className, ...props }, ref) => (
+  // <div className="relative w-full overflow-auto">
+  <table
+    ref={ref}
+    className={cn("w-full caption-bottom text-sm", className)}
+    {...props}
+  />
+  // </div>
+));
+Table.displayName = "Table";
+
+const TableHeader = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props} />
+));
+TableHeader.displayName = "TableHeader";
+
+const TableBody = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <tbody
+    ref={ref}
+    className={cn("[&_tr:last-child]:border-0", className)}
+    {...props}
+  />
+));
+TableBody.displayName = "TableBody";
+
+const TableFooter = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <tfoot
+    ref={ref}
+    className={cn(
+      "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
+      className
+    )}
+    {...props}
+  />
+));
+TableFooter.displayName = "TableFooter";
+
+const TableRow = React.forwardRef<
+  HTMLTableRowElement,
+  React.HTMLAttributes<HTMLTableRowElement>
+>(({ className, ...props }, ref) => (
+  <tr
+    ref={ref}
+    className={cn(
+      "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+      className
+    )}
+    {...props}
+  />
+));
+TableRow.displayName = "TableRow";
+
+const TableHead = React.forwardRef<
+  HTMLTableCellElement,
+  React.ThHTMLAttributes<HTMLTableCellElement>
+>(({ className, ...props }, ref) => (
+  <th
+    ref={ref}
+    className={cn(
+      "h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+      className
+    )}
+    {...props}
+  />
+));
+TableHead.displayName = "TableHead";
+
+const TableCell = React.forwardRef<
+  HTMLTableCellElement,
+  React.TdHTMLAttributes<HTMLTableCellElement>
+>(({ className, ...props }, ref) => (
+  <td
+    ref={ref}
+    className={cn("p-4 align-middle [&:has([role=checkbox])]:pr-0", className)}
+    {...props}
+  />
+));
+TableCell.displayName = "TableCell";
+
+const TableCaption = React.forwardRef<
+  HTMLTableCaptionElement,
+  React.HTMLAttributes<HTMLTableCaptionElement>
+>(({ className, ...props }, ref) => (
+  <caption
+    ref={ref}
+    className={cn("mt-4 text-sm text-muted-foreground", className)}
+    {...props}
+  />
+));
+TableCaption.displayName = "TableCaption";
+
+export {
+  Table,
   TableHeader,
   TableBody,
   TableFooter,
   TableHead,
   TableRow,
   TableCell,
-} from "@/components/ui/table";
-import { Button } from "@/components/atoms/button";
-import Pagination from "../pagination/paginiation";
-
-interface AnyObject {
-  [key: string]: any;
-}
-
-interface GenericTableProps<T extends AnyObject> {
-  columns: {
-    title: string;
-    dataIndex: keyof T;
-    render?: (value: any, record: T) => React.ReactNode;
-  }[];
-  data: T[];
-  sizeOptions?: number[] | string[];
-  tableTitle?: string;
-  countTitle?: string;
-  count?: number;
-  onRow?: (record: T) => React.HTMLAttributes<HTMLTableRowElement>;
-  label?: string;
-  action?: () => void;
-  pagination?: boolean;
-  pageSize?: number;
-}
-
-export const MainTable = <T extends AnyObject>({
-  columns,
-  data,
-  tableTitle,
-  countTitle,
-  count,
-  onRow,
-  label,
-  action,
-  pagination = true,
-  pageSize = 10,
-}: GenericTableProps<T>) => {
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const totalPages = Math.ceil(data.length / pageSize);
-
-  const paginatedData = pagination
-    ? data.slice((currentPage - 1) * pageSize, currentPage * pageSize)
-    : data;
-
-  return (
-    <div className="relative w-full overflow-auto">
-      <div className="flex flex-col items-start justify-normal gap-[30px] pb-[30px]">
-        {tableTitle && (
-          <div className="border-l-[7px] border-black">
-            <h1 className="px-4 font-bold text-[25px]">{tableTitle}</h1>
-          </div>
-        )}
-        <div className="text-[20px] flex items-center justify-between w-full">
-          {countTitle}：{count}
-          {action && (
-            <div className="h-full flex items-end justify-end lg:pr-2">
-              <Button variant="default" size="lg" onClick={action}>
-                {label}
-              </Button>
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="h-[70vh] relative overflow-auto">
-        <ShadcnTable className="w-full caption-bottom text-sm border border-gray-300 mb-10">
-          <TableHeader className="sticky top-0 bg-white z-10 !text-black">
-            <TableRow>
-              {columns.map((col) => (
-                <TableHead key={col.dataIndex.toString()}>
-                  {col.title}
-                </TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {paginatedData.map((item, index) => (
-              <TableRow key={index} {...onRow?.(item)}>
-                {columns.map((col) => (
-                  <TableCell key={col.dataIndex.toString()}>
-                    {col.render
-                      ? col.render(item[col.dataIndex], item)
-                      : item[col.dataIndex]}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-          {pagination && (
-            <TableFooter>
-              <TableRow>
-                <TableCell colSpan={columns.length}>
-                  {/* Reusable Pagination Component */}
-                  <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={setCurrentPage}
-                  />
-                </TableCell>
-              </TableRow>
-            </TableFooter>
-          )}
-        </ShadcnTable>
-      </div>
-    </div>
-  );
+  TableCaption,
 };

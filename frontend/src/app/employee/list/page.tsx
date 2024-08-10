@@ -1,9 +1,7 @@
 "use client";
 import { useSelector, useDispatch } from "react-redux";
-import { EmployeesTable } from "../_components";
-import { EmployeeGrid } from "../_components/employeeGridView";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+import { EmployeesTable, EmployeeGrid } from "../_components";
+import { Switch, Label } from "@/components";
 import { RootState, AppDispatch } from "@/redux/store";
 import { toggleView } from "@/redux/slices/viewGridSlice";
 

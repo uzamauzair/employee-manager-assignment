@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface ViewState {
+export interface ViewState {
     isGridView: boolean;
 }
 

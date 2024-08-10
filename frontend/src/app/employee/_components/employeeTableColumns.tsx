@@ -10,7 +10,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from "@/components/molucules/alert-dialog/alert-dialog";
 
 export const getEmployeeTableColumns = (
   handleEditEmployee: (empId: string) => void,

@@ -3,11 +3,11 @@ import { fetchEmployees, addEmployee, updateEmployee, deleteEmployee } from '../
 
 export interface Employee {
     _id?: string;  // Updated to string to reflect MongoDB's ObjectId
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    gender: 'M' | 'F';
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phoneNumber?: string;
+    gender?: 'M' | 'F';
 }
 
 export interface ApiResponse {
@@ -16,7 +16,7 @@ export interface ApiResponse {
     };
 }
 
-interface EmployeeState {
+export interface EmployeeState {
     employees: Employee[];
     loading: boolean;
     error: string | null;

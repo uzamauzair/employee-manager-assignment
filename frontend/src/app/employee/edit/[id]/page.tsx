@@ -14,25 +14,25 @@ import {
   EmployeeFormData,
   EmployeeSchema,
 } from "@/validators/employeeValidators";
-import { Button } from "@/components/atoms/button";
 import {
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+  Input,
+  Label,
+  RadioGroup,
+  RadioGroupItem,
+  Loader,
+} from "@/components";
 import { setErrorToast, setSuccessToast } from "@/functions/toast.function";
 import { useRouter } from "next/navigation";
 
@@ -59,7 +59,7 @@ const EditEmployee = ({ params }: { params: { id: string } }) => {
     if (employee) {
       form.reset(employee);
     } else {
-      dispatch(fetchEmployees()); // Fetch employees if not already fetched
+      dispatch(fetchEmployees());
     }
   }, [employee, dispatch, form]);
 
@@ -81,7 +81,11 @@ const EditEmployee = ({ params }: { params: { id: string } }) => {
   };
 
   if (!employee) {
-    return <div>Loading...</div>; // or handle loading state appropriately
+    return (
+      <div>
+        <Loader />
+      </div>
+    ); // or handle loading state appropriately
   }
 
   return (

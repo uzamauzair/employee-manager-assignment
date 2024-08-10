@@ -11,7 +11,7 @@ import { selectEmployees, selectLoading, selectError } from "@/redux/selectors";
 import { AppDispatch } from "@/redux/store";
 import { useRouter } from "next/navigation";
 import { getEmployeeTableColumns } from "./employeeTableColumns";
-import Loader from "@/components/atoms/loader/loader";
+import { Loader } from "@/components";
 
 export const EmployeesTable = () => {
   const dispatch = useDispatch<AppDispatch>();

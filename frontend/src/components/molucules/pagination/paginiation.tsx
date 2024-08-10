@@ -6,7 +6,7 @@ type PaginationProps = {
   onPageChange: (page: number) => void;
 };
 
-const Pagination = ({
+export const Pagination = ({
   currentPage,
   totalPages,
   onPageChange,
@@ -45,5 +45,3 @@ const Pagination = ({
     </div>
   );
 };
-
-export default Pagination;

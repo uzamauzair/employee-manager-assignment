@@ -4,10 +4,10 @@ import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { selectEmployees, selectLoading, selectError } from "@/redux";
 import { EmployeeCard } from "./employeeCard";
-import Loader from "@/components/atoms/loader/loader";
+import { Loader } from "@/components";
 import { deleteEmployee } from "@/redux/actions/employeeActions";
 import { AppDispatch } from "@/redux/store";
-import Pagination from "@/components/molucules/pagination/paginiation";
+import { Pagination } from "@/components/";
 import { Button } from "@/components/atoms/button";
 
 export const EmployeeGrid = () => {
