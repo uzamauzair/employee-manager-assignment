@@ -14,6 +14,10 @@ import {
   Input,
   Button,
   Loader,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
 } from "@/components";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -178,24 +182,32 @@ export const FormClientWrapper = ({ employeeId }: ClientWrapperProps) => {
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
           name="gender"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Gender</FormLabel>
+            <FormItem className="space-x-2">
+              <FormLabel>Select Your Gender</FormLabel>
               <FormControl>
-                <RadioGroup value={field.value} onValueChange={field.onChange}>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="M" id="option-male" />
-                    <Label htmlFor="option-male">Male</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="F" id="option-female" />
-                    <Label htmlFor="option-female">Female</Label>
-                  </div>
-                </RadioGroup>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="default">
+                      {field.value === "M"
+                        ? "Male"
+                        : field.value === "F"
+                        ? "Female"
+                        : "Select Gender"}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem onSelect={() => field.onChange("M")}>
+                      Male
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => field.onChange("F")}>
+                      Female
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </FormControl>
               <FormMessage />
             </FormItem>
