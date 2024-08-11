@@ -1,5 +1,6 @@
+import { BACKEND_BASE_URL } from '@/config';
 import axios from 'axios';
 
 export const api = axios.create({
-    baseURL: 'http://localhost:3001/api',
+    baseURL: BACKEND_BASE_URL,
 });
