@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { setErrorToast, setSuccessToast } from "@/functions/toast.function";
+import { setErrorToast, setSuccessToast } from "@/functions";
 import { addEmployee, AppDispatch, RootState } from "@/redux";
 import { EmployeeFormData, EmployeeSchema } from "@/validators";
 

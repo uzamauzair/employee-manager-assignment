@@ -29,7 +29,7 @@ import {
   EmployeeFormData,
   EmployeeSchema,
 } from "@/validators/employeeValidators";
-import { setErrorToast, setSuccessToast } from "@/functions/toast.function";
+import { setErrorToast, setSuccessToast } from "@/functions";
 import { useRouter } from "next/navigation";
 
 interface ClientWrapperProps {

@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch, fetchEmployees, updateEmployee } from "@/redux";
 import { EmployeeFormData, EmployeeSchema } from "@/validators/employeeValidators";
-import { setErrorToast, setSuccessToast } from "@/functions/toast.function";
+import { setErrorToast, setSuccessToast } from "@/functions";
 import { useRouter } from "next/navigation";
 
 export const useEditEmployeeForm = (employeeId: string) => {

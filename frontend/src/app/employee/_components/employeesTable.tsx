@@ -47,8 +47,6 @@ export const EmployeesTable = () => {
     loadEmployees();
   }, [dispatch]);
 
-  console.log("Employees", employees);
-
   const columns = getEmployeeTableColumns(
     handleEditEmployee,
     handleDeleteEmployee
