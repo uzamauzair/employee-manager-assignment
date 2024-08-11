@@ -8,9 +8,6 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-  RadioGroup,
-  RadioGroupItem,
-  Label,
   Input,
   Button,
   Loader,
@@ -191,7 +188,7 @@ export const FormClientWrapper = ({ employeeId }: ClientWrapperProps) => {
               <FormControl>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="default">
+                    <Button variant="plain">
                       {field.value === "M"
                         ? "Male"
                         : field.value === "F"

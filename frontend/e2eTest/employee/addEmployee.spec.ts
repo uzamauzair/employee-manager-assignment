@@ -15,7 +15,7 @@ test.describe('AddNotice', () => {
         await page.waitForTimeout(10000);
         // Explicitly wait for the button to be available
         const addEmployeeButton = page.locator('text=Add Employee');
-        await addEmployeeButton.waitFor({ state: 'visible', timeout: 50000 });
+        await addEmployeeButton.waitFor({ state: 'visible', timeout: 10000 });
 
         // Click the "Add Employee" button and wait for the navigation
         await Promise.all([
