@@ -1,4 +1,3 @@
-Employee-Manager
 Employee-Manager is a monorepo application built using Next.js for the frontend and NestJS for the backend, with MongoDB as the database. The project follows the Atomic Design pattern to ensure a scalable and maintainable structure.
 
 Getting Started
@@ -40,4 +39,12 @@ The backend is built with NestJS and organized to follow best practices for modu
 ![image](https://github.com/user-attachments/assets/54e0f049-7fb6-4002-a21b-3527b8bf6275)
 
 Screen Shots of the Application
+![image](https://github.com/user-attachments/assets/163513fd-8721-4aea-aad9-b0304af1e04b)
+![image](https://github.com/user-attachments/assets/ed9337f8-1176-400d-84a8-72eb2108ab69)
+![image](https://github.com/user-attachments/assets/c968cb75-5fec-44d3-9d69-8725f8c24646)
+![image](https://github.com/user-attachments/assets/76f3ac81-bc24-4c99-9c33-e6ce7e53d9d7)
+![image](https://github.com/user-attachments/assets/1cd73ebd-4a2e-4318-9df3-3f909e71babe)
+
+
+
 
