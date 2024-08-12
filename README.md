@@ -26,7 +26,7 @@ Frontend Setup
 4. Start the frontend :
  npm run dev
 5. Run frontend E2E test cases:
- npm run test:e2e
+ npx playwright test --headed or npm run test:e2e
 
 Repository Structure
 Frontend Structure
